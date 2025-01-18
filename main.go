@@ -9,7 +9,6 @@ import (
     "github.com/gin-contrib/cors" // ✅ Import CORS middleware
     "github.com/gin-gonic/gin"
     "go.mongodb.org/mongo-driver/bson"
-    "go.mongodb.org/mongo-driver/bson/primitive"
     "go.mongodb.org/mongo-driver/mongo"
     "go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -50,25 +49,25 @@ func initMongoDB() {
     collection = client.Database("rickmorty").Collection("characters")
 }
 
-// ✅ Search Character by Name (Case-Insensitive)
 func getCharacterByName(c *gin.Context) {
     name := c.Param("name")
-
     var character Character
 
-    // ✅ Case-Insensitive Search using MongoDB Regex
+    // Improved regex query to match full name (case insensitive)
     filter := bson.M{"name": bson.M{"$regex": fmt.Sprintf("^%s$", name), "$options": "i"}}
+    fmt.Println("🔎 Searching for:", name)  // Debugging line
 
     err := collection.FindOne(context.TODO(), filter).Decode(&character)
     if err != nil {
-        fmt.Println("❌ Character not found:", name)
+        fmt.Println("❌ Character not found in MongoDB:", name)
         c.JSON(http.StatusNotFound, gin.H{"error": "Character not found"})
         return
     }
 
-    fmt.Println("✅ Found:", character.Name)
+    fmt.Println("✅ Found Character:", character.Name) // Debugging line
     c.JSON(http.StatusOK, character)
 }
+
 
 // ✅ Main Function to Start the Server with CORS
 func main() {

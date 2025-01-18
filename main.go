@@ -29,19 +29,21 @@ func initMongoDB() {
 }
 
 func getCharacterByName(c *gin.Context) {
-	name := c.Param("name") 
+    name := c.Param("name")
+    var character Character
 
-	var result bson.M
-	filter := bson.M{"name": primitive.Regex{Pattern: name, Options: "i"}}
+    filter := bson.M{"name": primitive.Regex{Pattern: name, Options: "i"}}
 
-	err := collection.FindOne(context.TODO(), filter).Decode(&result)
-	if err != nil {
-		c.JSON(404, gin.H{"error": "Character not found"})
-		return
-	}
+    err := collection.FindOne(context.TODO(), filter).Decode(&character)
+    if err != nil {
+        fmt.Println("❌ Error fetching character:", err) 
+        c.JSON(http.StatusNotFound, gin.H{"error": "Character not found"})
+        return
+    }
 
-	c.JSON(200, result)
+    c.JSON(http.StatusOK, character)
 }
+
 
 func main() {
 	initMongoDB()

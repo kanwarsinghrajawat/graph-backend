@@ -32,7 +32,7 @@ func getCharacterByName(c *gin.Context) {
 	name := c.Param("name") 
 
 	var result bson.M
-	filter := bson.M{"name": name}
+	filter := bson.M{"name": primitive.Regex{Pattern: name, Options: "i"}}
 
 	err := collection.FindOne(context.TODO(), filter).Decode(&result)
 	if err != nil {

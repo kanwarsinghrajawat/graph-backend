@@ -8,8 +8,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson"
 
-	"backend/config" 
-	"backend/models" 
+	"backend/config"
+	"backend/models"
 )
 
 func GetCharacterByName(c *gin.Context) {
@@ -32,9 +32,12 @@ func GetCharacterByName(c *gin.Context) {
 	}
 
 	if len(characters) == 0 {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Character not found"})
+		c.JSON(http.StatusNotFound, gin.H{"error": "No characters found", "count": 0})
 		return
 	}
 
-	c.JSON(http.StatusOK, characters)
+	c.JSON(http.StatusOK, gin.H{
+		"count":      len(characters),
+		"characters": characters,
+	})
 }

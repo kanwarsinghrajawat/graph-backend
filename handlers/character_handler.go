@@ -8,11 +8,10 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson"
 
-	"backend/config" // ✅ Change from "go-rest-api/config" to "backend/config"
-	"backend/models" // ✅ Change from "go-rest-api/models" to "backend/models"
+	"backend/config" 
+	"backend/models" 
 )
 
-// GetCharacterByName searches for characters by name (case-insensitive)
 func GetCharacterByName(c *gin.Context) {
 	name := c.Param("name")
 	var characters []models.Character

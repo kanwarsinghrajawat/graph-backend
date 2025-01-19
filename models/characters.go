@@ -2,7 +2,6 @@ package models
 
 import "go.mongodb.org/mongo-driver/bson/primitive"
 
-// Character represents a character from the database
 type Character struct {
 	ID       primitive.ObjectID `bson:"_id,omitempty" json:"id"`
 	Name     string             `bson:"name" json:"name"`

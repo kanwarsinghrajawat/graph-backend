@@ -1,0 +1,47 @@
+# Binaries & Build Artifacts
+*.exe
+*.out
+*.o
+*.so
+*.a
+*.dll
+*.dylib
+bin/
+dist/
+build/
+
+# IDE & Editor Files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Go Build Cache & Temporary Files
+/go/
+*.log
+*.test
+*.tmp
+
+# Dependencies & Modules
+vendor/
+go.sum
+go.work
+go.work.sum
+
+# OS-Specific Files
+.DS_Store
+Thumbs.db
+*.bak
+*.~*
+
+# Secrets & Configurations
+.env
+.env.local
+.env.development
+.env.production
+config.yaml
+config.json
+secrets.json
+
+# Git-Specific Files
+*.orig
